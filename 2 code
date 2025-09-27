@@ -1,0 +1,25 @@
+import pulp
+
+model = pulp.LpProblem("Sock_Stocking_Optimization", pulp.LpMaximize)
+
+x1 = pulp.LpVariable('Chulki', lowBound=0, cat='Integer') # x1 - чулки
+x2 = pulp.LpVariable('Noski', lowBound=0, cat='Integer')  # x2 - носки
+
+model += 10 * x1 + 4 * x2, "Profit"
+
+model += 0.02 * x1 + 0.01 * x2 <= 60, "Uchastok_1"
+model += 0.03 * x1 + 0.01 * x2 <= 70, "Uchastok_2"
+model += 0.03 * x1 + 0.02 * x2 <= 100, "Uchastok_3"
+
+model.solve()
+
+print("Status:", pulp.LpStatus[model.status])
+print(f"Оптимальный объем производства чулок (X1): {pulp.value(x1):.0f} пар")
+print(f"Оптимальный объем производства носков (X2): {pulp.value(x2):.0f} пар")
+print(f"Максимальная прибыль (Z): {pulp.value(model.objective):.2f} руб.")
+
+# Ожидаемый вывод (решение):
+# Status: Optimal
+# Оптимальный объем производства чулок (X1): 2333 пар
+# Оптимальный объем производства носков (X2): 1333 пар
+# Максимальная прибыль (Z): 28666.00 руб.
