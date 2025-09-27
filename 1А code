@@ -1,0 +1,31 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+x1 = np.linspace(0, 6, 500)
+
+y_1 = 5 - x1
+y_2 = 3 * x1 - 3
+y_nonneg = np.zeros_like(x1) x2 >= 0
+
+x2 <= 5 - x1 ИЛИ x2 <= 3x1 - 3
+y_upper = np.minimum(y_1, y_2)
+
+x2 >= 0
+y_lower = y_nonneg
+
+plt.figure(figsize=(7, 7))
+plt.title('(1а)')
+plt.xlabel('X1')
+plt.ylabel('X2')
+plt.xlim(0, 6)
+plt.ylim(0, 6)
+plt.grid(True)
+
+plt.plot(x1, y_1, label=r'$x_1 + x_2 = 5$')
+plt.plot(x1, y_2, label=r'$3x_1 - x_2 = 3$')
+
+plt.fill_between(x1, y_lower, y_upper, where=(y_upper >= y_lower) & (x1 >= 0), 
+                 color='green', alpha=0.5, label='ОДР')
+
+plt.legend()
+plt.show()
